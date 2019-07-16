@@ -1,0 +1,9 @@
+Criação de um servidor via python 
+
+Comando para executar a criação e configuração da image
+(1) - sudo docker image build -t ex-build-dev .
+
+Comando para executar o container 
+(2) - sudo docker container run -it $(pwd):/app -p 80:8000 --name python-server ex-build-dev
+
+

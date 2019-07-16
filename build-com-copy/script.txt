@@ -1,0 +1,2 @@
+(1) = sudo docker image build -t ex-build-copy .
+(2) = sudo docker container run -p 80:80 ex-build-copy

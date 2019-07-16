@@ -1,0 +1,96 @@
+<html>
+    <cabeça>
+        <meta charset = 'utf-8'>
+        <title> Cadastro Simples </title>
+        <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class = "container">
+            <h1> Cadastro Simples </h1>
+            <hr>
+            <div>
+                <nome da entrada = 'id' tipo = 'oculto' />
+                <div class = "form-group">
+                    <label for = "Name"> </label>
+                    <input class = 'forma-controle' nome = 'nome' espaço reservado = 'Digite o nome' />
+                </div>
+                <botão classe = 'btn btn-sucesso' salvar> Salvar </button>
+            </div>
+
+            <table class = "table" id = 'clientes'>
+                <thead>
+                    <tr>
+                        <th> Nome </th>
+                        <th> Ações </th>
+                    </tr>
+                </thead>
+                <tbody id = "clientsRows"> </tbody>
+            </table>
+        </div>
+
+        <script src = 'https: //cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'> </script>
+
+        <script>
+            const API = 'http://localhost:3000'
+
+            const createButton = (rótulo, tipo) => {
+                return $ ('<button>'). addClass (`btn btn - $ {type}`) .html (rótulo)
+            }
+
+            const renderRows = clients => {
+                const rows = clients.map (client => {
+                    const updateButton = createButton ('Atualizar', 'aviso')
+                    updateButton.click (() => loadClient (cliente))
+
+                    const removeButton = createButton ('excluir', 'perigo')
+                    removeButton.click (() => removeClient (cliente))
+
+                    return $ ('<tr>')
+                        .append ($ ('<td>'). append (client.name))
+                        .append ($ ('<td>'). append (updateButton) .append (removeButton))
+                })
+
+                $ ('# clientsRows'). html (linhas)
+            }
+
+            const loadClient = client => {
+                $ ('[name = id]'). val (client._id)
+                $ ('[nome = nome]'). val (client.name)
+            }
+
+            const removeClient = client => {
+                $ .ajax ({
+                    método: 'DELETE',
+                    url: `$ {API} / clients / $ {client._id}`,
+                    sucesso: getClients
+                })
+            }
+
+            const getClients = () => {
+                $ .ajax ({
+                    url: `$ {API} / clients`,
+                    sucesso: clientes => {
+                        renderRows (clientes)
+                        $ ('[nome]'). val ('')
+                    }
+                })
+            }
+
+            const saveClient = () => {
+                const _id = $ ('[nome = id]'). val ()
+                const nome = $ ('[nome = nome]'). val ()
+                $ .ajax ({
+                    método: _id? 'PUT': 'POST',
+                    url: `$ {API} / clients / $ {_ id}`,
+                    dados: _id? {_id, name}: {name},
+                    sucesso: getClients
+                })
+            }
+
+            $ (() => {
+                getClients ()
+                $ ('[salvar]'). clique (saveClient)
+            })
+        </script>
+    </body>
+</html>
