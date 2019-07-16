@@ -1,0 +1,13 @@
+
+Definição da versão
+
+version:'3'
+services: 
+    db:
+        image: postgres:9.6
+
+executar o comando
+docker-compose up -d
+
+docker-composer exec db psql -U postgres -c '\l'
+docker-compose down (removendo o banco de dados criado a cima)
